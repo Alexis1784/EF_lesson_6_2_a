@@ -16,9 +16,18 @@ namespace EF_lesson_6_2_a
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Phone>()
+            //    .HasMany(p => p.Companies)
+            //    .WithMany(c => c.Phones);
             modelBuilder.Entity<Phone>()
                 .HasMany(p => p.Companies)
-                .WithMany(c => c.Phones);
+                .WithMany(c => c.Phones)
+                .Map(m =>
+                {
+                    m.ToTable("MobileCompanies");
+                    m.MapLeftKey("MobileId");
+                    m.MapRightKey("CompanyId");
+                });
         }
         static MyContext()
         {
